@@ -1,31 +1,34 @@
-const BASE_URL = "https://source.unsplash.com/1600x900/?";
+import { useRef, useState } from "react";
+import Header from "./components/Header";
+import Input from "./components/Input";
+import Button from "./components/Button";
+import Image from "./components/Image";
 
 function App() {
-  <>
-    <h1 className="my-8 text-center text-3xl font-black">
-      Display a Random Image
-    </h1>
+  function clickedButton() {
+    const value = inputValuesRef.current.value;
+    setSearchValue(value);
+  }
 
-    <main className="flex flex-col items-center justify-center">
-      <form className="mb-8 flex flex-col items-center gap-y-4">
-        <label htmlFor="search">
-          Search (separate terms with commas - no spaces)
-        </label>
-        <input
-          type="search"
-          id="search"
-          className="rounded-sm border px-1"
-          placeholder="🔍"
-        />
-        <button
-          type="submit"
-          className="rounded-full bg-green-500 p-4 text-white"
+  const inputValuesRef = useRef();
+
+  const [searchValue, setSearchValue] = useState("");
+
+  return (
+    <>
+      <Header />
+      <main className="flex flex-col items-center justify-center">
+        <form
+          className="mb-8 flex flex-col items-center gap-y-4"
+          onSubmit={(e) => e.preventDefault()}
         >
-          Go!
-        </button>
-      </form>
-    </main>
-  </>;
+          <Input referenceName={inputValuesRef} />
+          <Button clickedButton={clickedButton} />
+          <Image searchValue={searchValue} />
+        </form>
+      </main>
+    </>
+  );
 }
 
 export default App;
